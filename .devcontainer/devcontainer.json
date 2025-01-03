@@ -1,0 +1,14 @@
+{
+    "name": "Daytona GPU Utilization",
+    "image":"Dockerfile",
+    "customizations": {
+        "extensions":[
+            "ms-python.python",
+            "ms-vscode.cpptools",
+            "ms-python.vscode-pylance"
+        ]
+    },
+    "remoteUser": "root",
+    "forwardPorts": []
+    
+}

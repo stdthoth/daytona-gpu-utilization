@@ -16,7 +16,6 @@
     "runArgs": [
     "--gpus", "all"  // Ensures GPU access
   ],
-    "remoteUser": "vscode",
     "forwardPorts": []
     
 }

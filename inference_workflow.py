@@ -5,7 +5,7 @@ tokenizer = GPT2Tokenizer.from_pretrained("./fine_tuned_gpt2")
 model = GPT2LMHeadModel.from_pretrained("./fine_tuned_gpt2")
 
 # Generate text
-input_text = "Once upon a time"
+input_text = "Who is Gengis Khan"
 input_ids = tokenizer.encode(input_text, return_tensors="pt")
 
 output = model.generate(input_ids, max_length=50, num_return_sequences=1)

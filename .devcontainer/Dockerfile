@@ -6,7 +6,7 @@ RUN pip install --upgrade pip \
     && pip install torch torchvision torchaudio transformers datasets accelerate torchmetrics
 
 COPY *.py /workspace/
-COPY data.txt /workspace/
+COPY train.txt /workspace/
 
 CMD [ "bash" ]
 

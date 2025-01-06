@@ -8,12 +8,24 @@ dataset = load_dataset("text", data_files={"train": "train.txt"})
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 model = GPT2LMHeadModel.from_pretrained("gpt2")
 
+# Add or set a pad token
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token  # Use the EOS token as padding token
+
 # Tokenize data
 def tokenize_function(examples):
-    return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=50)
+    tokens = tokenizer(examples["text"], truncation=True, padding="max_length", max_length=50)
+    tokens["labels"] = tokens["input_ids"].copy()  # Add labels for computing the loss
+    return tokens
 
 tokenized_dataset = dataset.map(tokenize_function, batched=True)
-tokenized_dataset = tokenized_dataset["train"].train_test_split(test_size=0.1)
+
+# Handle small datasets: Skip split if the dataset is too small
+if len(tokenized_dataset["train"]) > 1:
+    tokenized_dataset = tokenized_dataset["train"].train_test_split(test_size=0.5)
+else:
+    # Use the same dataset for both train and test
+    tokenized_dataset = {"train": tokenized_dataset["train"], "test": tokenized_dataset["train"]}
 
 # Training arguments
 training_args = TrainingArguments(
